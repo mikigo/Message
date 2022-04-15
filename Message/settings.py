@@ -37,9 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'message_form.apps.MessageFormConfig',
-
+    'apps.message_form.apps.MessageFormConfig',
 ]
 
 MIDDLEWARE = [
