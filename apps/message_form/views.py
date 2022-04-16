@@ -36,13 +36,13 @@ def message_form(request):
         name = request.POST.get("name", "")
         email = request.POST.get("email", "")
         address = request.POST.get("address", "")
-        messages = request.POST.get("message", "")
+        message_text = request.POST.get("message", "")
 
         message = Message()
         message.name = name
         message.email = email
         message.address = address
-        message.message = messages
+        message.message = message_text
         message.save()
         return render(request, "message_form.html", {
             "message": message
