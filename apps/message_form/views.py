@@ -1,5 +1,7 @@
 from apps.message_form.models import Message
 from django.shortcuts import render
+
+
 # Create your views here.
 
 # 返回 templates下的 html 文件。
@@ -18,16 +20,40 @@ def message_form(request):
     # for message in all_message:
     #     print(message.name)  # message.delete()
 
-    #（3）get 返回一个对象，数据不存在或者有多条数据，如果数据不存在会抛异常
+    # （3）get 返回一个对象，数据不存在或者有多条数据，如果数据不存在会抛异常
     # message = Message.objects.get(name="mikigo")
     # print(message.address)
 
     # 2、进行数据插入操作
-    message = Message()
-    message.name = "huang"
-    message.address = "beijin"
-    message.message = "second"
-    message.email = "huang@uniontech.com"
-    # 如果 key 存在，可以更新数据
-    message.save()
-    return render(request, "message_form.html")
+    # message = Message()
+    # message.name = "huang"
+    # message.address = "beijin"
+    # message.message = "second"
+    # message.email = "huang@uniontech.com"
+    # # 如果 key 存在，可以更新数据
+    # message.save()
+    if request.method == "POST":
+        name = request.POST.get("name", "")
+        email = request.POST.get("email", "")
+        address = request.POST.get("address", "")
+        messages = request.POST.get("message", "")
+
+        message = Message()
+        message.name = name
+        message.email = email
+        message.address = address
+        message.message = messages
+        message.save()
+        return render(request, "message_form.html", {
+            "message": message
+        })
+
+    if request.method == "GET":
+        var_dict = {}
+        all_message = Message.objects.all()
+        if all_message:
+            message = all_message[0]
+            var_dict = {
+                "message": message
+            }
+        return render(request, "message_form.html", var_dict)
